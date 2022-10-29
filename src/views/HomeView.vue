@@ -1,17 +1,17 @@
 <template>
-  <v-container>
-		<v-row>
-			<v-col cols="6">
-				<v-form ref="form">
-					<v-text-field :label="lang.search" :rules="[rules.required, rules.email]"/>
-					<v-btn @click="validate">XD</v-btn>
-				</v-form>
-			</v-col>
-      <v-col cols="6">
-        <h1 class="font-weight-bold grey--text text--darken-3 custom-borderline">Borderline Example</h1>
+  <v-container fluid class="px-8">
+    <v-row dense>
+      <v-col cols="12">
+        <span class="uni-sans-heavy text-md white--text mx-4">{{ lang.recentPosts }}</span>
       </v-col>
-		</v-row>
-	</v-container>
+    </v-row>
+    <v-divider class="my-4" dark/>
+    <v-row justify="start" align="start">
+      <v-col cols="3" v-for="(post, key) in posts" :key="key">
+        <PostCardComponent :post="post"/>
+      </v-col>
+    </v-row>
+  </v-container>
 </template>
 
 <script lang="ts">
@@ -21,14 +21,29 @@ import DialogModule from "@/store/DialogModule"
 import LangModule from "@/store/LangModule"
 import Rules from "@/service/tool/Rules"
 import Dialog from "@/model/vue/Dialog"
+import PostService from "@/service/PostService";
+import Post from "@/model/Post";
+import PostCardComponent from "@/components/PostCardComponent.vue";
 
-@Component
+@Component( { components: { PostCardComponent } } )
 export default class HomeView extends Vue {
 
 	@Ref() readonly form!: HTMLFormElement
 
+  posts: Post[] = []
+  page: number = 0
+  size: number = 12
+
   get lang() { return getModule(LangModule).lang }
 	get rules() { return Rules }
+
+  created() {
+    this.refresh()
+  }
+
+  refresh() {
+    PostService.getPosts(this, this.posts, this.page, this.size)
+  }
 
 	validate() {
 		getModule(DialogModule).showDialog(new Dialog(this.lang.warning, "¿Desea continuar?", () => {

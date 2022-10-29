@@ -16,4 +16,7 @@ export default {
     about: "Acerca",
     search: "Buscar",
 
+    recentPosts: "Post Recientes",
+    category: "Categoría"
+
 }

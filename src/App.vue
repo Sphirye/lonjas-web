@@ -2,9 +2,9 @@
   <v-app>
     <HeaderComponent/>
     <DrawerComponent/>
-    <v-main>
+    <v-main class="lonjas-base">
       <transition name="fade" mode="out-in">
-        <router-view/>
+        <router-view class="my-8"/>
       </transition>
     </v-main>
     <SnackbarComponent/>

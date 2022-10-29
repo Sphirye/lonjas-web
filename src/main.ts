@@ -10,6 +10,8 @@ import '@mdi/font/css/materialdesignicons.css'
 import LangModule from "@/store/LangModule"
 import { getModule } from "vuex-module-decorators"
 import VueDebounce from "vue-debounce"
+//@ts-ignore
+import lineClamp from 'vue-line-clamp'
 
 Vue.config.productionTip = false
 
@@ -18,6 +20,7 @@ let vue: Vue
 AxiosConfig.init(vue!)
 getModule(LangModule).loadLanguage()
 Vue.use(VueDebounce)
+Vue.use(lineClamp)
 
 vue = new Vue({
   router,
