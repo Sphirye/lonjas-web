@@ -17,6 +17,8 @@ export default {
     search: "Buscar",
 
     recentPosts: "Post Recientes",
-    category: "Categoría"
+    category: "Categoría",
+    group: "Grupo",
+    groups: "Grupos"
 
 }

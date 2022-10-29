@@ -13,7 +13,6 @@
     </v-row>
   </v-container>
 </template>
-
 <script lang="ts">
 import {Component, Ref, Vue} from 'vue-property-decorator'
 import {getModule} from "vuex-module-decorators"
@@ -42,7 +41,7 @@ export default class HomeView extends Vue {
   }
 
   refresh() {
-    PostService.getPosts(this, this.posts, this.page, this.size)
+    PostService.getPosts(this, this.posts, this.page, this.size, null)
   }
 
 	validate() {

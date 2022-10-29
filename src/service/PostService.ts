@@ -2,6 +2,7 @@ import ConstantTool from "@/service/tool/ConstantTool"
 import JsonTool from "@/service/tool/JsonTool"
 import {Vue} from "vue-property-decorator"
 import Post from "@/model/Post"
+import Category from "@/model/Category";
 
 export default class PostService {
     static async getPost(component: Vue, id: number) {
@@ -19,7 +20,7 @@ export default class PostService {
         }
     }
 
-    static async getPosts(component: Vue, posts: Post[], page: number, size: number) {
+    static async getPosts(component: Vue, posts: Post[], page: number, size: number, category: Category | null) {
         // @ts-ignore
         component.loading = true
         try {
@@ -28,7 +29,6 @@ export default class PostService {
             })
 
             let list = JsonTool.jsonConvert.deserializeArray(response.data, Post)
-            // @ts-ignore
             posts.splice(0, posts.length)
             list.forEach(v => posts.push(v))
         } catch (e) {
