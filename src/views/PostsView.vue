@@ -7,98 +7,49 @@
         <v-icon>mdi-filter-menu-outline</v-icon>
       </v-btn>
     </v-row>
-    <v-divider class="my-4" dark/>
+    <v-progress-linear class="my-4" color="grey" :indeterminate="loading"/>
     <v-row justify="center" align="start">
       <v-col cols="3" v-for="(post, key) in posts" :key="key">
         <PostCardComponent :post="post"/>
       </v-col>
     </v-row>
 
-    <v-navigation-drawer v-if="false" v-model="drawer" width="300px" right clipped app :mobile-breakpoint="0" color="lonjas-base-2" dark>
-      <v-list-item class="px-2">
-        <v-list-item-avatar>
-          <v-icon large>mdi-filter</v-icon>
-        </v-list-item-avatar>
+    <v-progress-linear class="my-4" color="grey" :indeterminate="loading"/>
 
-        <v-list-item-title>
-          <h2 class="grey--text text--lighten-4 work-sans font-weight-medium">Filtros</h2>
-        </v-list-item-title>
-
-        <v-btn icon @click.stop="toggleDrawer">
-          <v-icon large>mdi-chevron-right</v-icon>
-        </v-btn>
-      </v-list-item>
-      <v-divider/>
-
-      <v-expansion-panels flat>
-        <v-expansion-panel class="transparent">
-          <v-expansion-panel-header>
-            <v-row align="center" no-gutters dense>
-              <v-icon small>mdi-filter</v-icon>
-              <h3 class="grey--text text--lighten-4 work-sans font-weight-medium mx-2">Tags</h3>
-            </v-row>
-          </v-expansion-panel-header>
-
-          <v-expansion-panel-content>
-            <v-row dense no-gutters align="center">
-              <v-col cols="12">
-                <v-autocomplete outlined class="rounded-0" dense hide-details="auto" append-icon="mdi-magnify" :label="lang.search"/>
-              </v-col>
-            </v-row>
-          </v-expansion-panel-content>
-        </v-expansion-panel>
-      </v-expansion-panels>
-      <v-divider/>
-
-      <v-expansion-panels flat>
-        <v-expansion-panel class="transparent">
-          <v-expansion-panel-header>
-            <v-row align="center" no-gutters dense>
-              <v-icon small>mdi-filter</v-icon>
-              <h3 class="grey--text text--lighten-4 work-sans font-weight-medium mx-2">Tags</h3>
-            </v-row>
-          </v-expansion-panel-header>
-
-          <v-expansion-panel-content>
-            <v-row dense no-gutters align="center">
-              <v-col cols="12">
-                <v-autocomplete outlined class="rounded-0" dense hide-details="auto" append-icon="mdi-magnify" :label="lang.search"/>
-              </v-col>
-            </v-row>
-          </v-expansion-panel-content>
-        </v-expansion-panel>
-      </v-expansion-panels>
-
-    </v-navigation-drawer>
-
-    <FiltersDrawerComponent :drawer="drawer" :selectedTags="tags" @close="toggleDrawer"/>
+    <FiltersDrawerComponent :drawer="drawer" @close="toggleDrawer" @clear="clearFilters" :selectedTags.sync="tags" :selectedCategory.sync="category" :selectedCharacters.sync="characters" @search="refresh"/>
 
   </v-container>
 </template>
 
 <script lang="ts">
+import FiltersDrawerComponent from "@/components/FiltersDrawerComponent.vue"
+import PostCardComponent from "@/components/PostCardComponent.vue"
 import {Component, Ref, Vue} from 'vue-property-decorator'
+import PostService from "@/service/PostService"
 import {getModule} from "vuex-module-decorators"
 import DialogModule from "@/store/DialogModule"
 import LangModule from "@/store/LangModule"
 import Rules from "@/service/tool/Rules"
+import Category from "@/model/Category"
 import Dialog from "@/model/vue/Dialog"
-import PostService from "@/service/PostService";
-import Post from "@/model/Post";
-import PostCardComponent from "@/components/PostCardComponent.vue";
-import FiltersDrawerComponent from "@/components/FiltersDrawerComponent.vue";
-import Tag from "@/model/Tag";
+import Post from "@/model/Post"
+import Tag from "@/model/Tag"
+import Character from "@/model/Character";
 
 @Component( { components: { PostCardComponent, FiltersDrawerComponent } } )
 export default class PostsView extends Vue {
 
   @Ref() readonly form!: HTMLFormElement
 
+  loading: boolean = false
   drawer: boolean = false
   posts: Post[] = []
   page: number = 0
   size: number = 12
-  tags: Tag[] = []
+
+  tags: number[] = []
+  category: number | null = null
+  characters: number[] = []
 
   get lang() { return getModule(LangModule).lang }
   get rules() { return Rules }
@@ -108,11 +59,18 @@ export default class PostsView extends Vue {
   }
 
   refresh() {
-    PostService.getPosts(this, this.posts, this.page, this.size, null)
+    PostService.getPosts(this, this.posts, this.page, this.size, this.category, this.characters, this.tags)
   }
 
   toggleDrawer() {
     this.drawer = !this.drawer
+  }
+
+  clearFilters() {
+    this.category = null
+    this.tags.splice(0, this.tags.length)
+    this.characters.splice(0, this.characters.length)
+    this.refresh()
   }
 
   validate() {

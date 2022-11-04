@@ -18,7 +18,11 @@ export default {
 
     recentPosts: "Post Recientes",
     category: "Categoría",
+    categories: "Categorías",
+    character: "Personaje",
+    characters: "Personajes",
     group: "Grupo",
-    groups: "Grupos"
+    groups: "Grupos",
+    clearFilters: "Limpiar filtros",
 
 }

@@ -31,7 +31,6 @@
               </template>
               <span class="work-sans">{{ lang.category }}</span>
             </v-tooltip>
-
           </v-sheet>
         </v-expand-transition>
       </v-img>

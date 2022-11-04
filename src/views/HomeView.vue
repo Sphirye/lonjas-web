@@ -41,7 +41,7 @@ export default class HomeView extends Vue {
   }
 
   refresh() {
-    PostService.getPosts(this, this.posts, this.page, this.size, null)
+    // PostService.getPosts(this, this.posts, this.page, this.size, null, null)
   }
 
 	validate() {

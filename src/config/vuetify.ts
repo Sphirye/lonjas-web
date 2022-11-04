@@ -25,6 +25,9 @@ export default new Vuetify({
 
         'lonjas-base': '#1b1b31',
         'lonjas-base-2': '#2e2638'
+      },
+      dark: {
+
       }
     }
   }
