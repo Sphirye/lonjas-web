@@ -1,7 +1,7 @@
 <template>
   <v-container fluid class="px-8">
     <v-row dense align="center">
-      <span class="uni-sans-heavy text-md white--text mx-4">{{ lang.recentPosts }}</span>
+      <span class="uni-sans-heavy text-md white--text mx-4">{{ lang.posts }}</span>
       <v-spacer/>
       <v-btn icon dark class="mx-4" large @click="toggleDrawer">
         <v-icon>mdi-filter-menu-outline</v-icon>
@@ -44,7 +44,7 @@ export default class PostsView extends Vue {
   loading: boolean = false
   drawer: boolean = false
   posts: Post[] = []
-  page: number = 0
+  page: number = 1
   size: number = 12
 
   tags: number[] = []
@@ -59,7 +59,7 @@ export default class PostsView extends Vue {
   }
 
   refresh() {
-    PostService.getPosts(this, this.posts, this.page, this.size, this.category, this.characters, this.tags)
+    PostService.getPosts(this, this.posts, this.page - 1, this.size, this.category, this.characters, this.tags)
   }
 
   toggleDrawer() {

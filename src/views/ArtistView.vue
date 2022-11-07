@@ -1,0 +1,109 @@
+<template>
+  <v-container fluid class="px-8">
+    <template v-if="artist.id">
+      <v-row dense align="center">
+        <span class="uni-sans-heavy text-md white--text mx-4">{{ lang.artist }}</span>
+      </v-row>
+      <v-progress-linear class="my-4" color="grey" :indeterminate="loading"/>
+      <v-row justify="start" align="start">
+        <v-col cols="4">
+          <v-card flat class="lonjas-base-2" dark>
+            <v-card-title>
+              <v-avatar size="128">
+                <v-img contain :src="artist.twitter.profile_image_url"/>
+              </v-avatar>
+              <div class="ml-6">
+                <h3 class="mb-0">{{ artist.twitter.name }}</h3>
+                <p class="font-weight-regular grey--text">@{{ artist.twitter.username }}</p>
+              </div>
+            </v-card-title>
+            <v-divider class="mx-3"/>
+            <v-card-text>
+              {{ totalPosts }}
+            </v-card-text>
+          </v-card>
+        </v-col>
+
+        <v-col cols="8">
+          <v-row dense align="center">
+            <span class="uni-sans-heavy text-md white--text mx-4">{{ lang.posts }}</span>
+          </v-row>
+          <v-progress-linear class="my-4" color="grey" :indeterminate="loading"/>
+          <v-row no-gutters dense>
+            <v-col cols="4" v-for="(post, key) in posts" :key="key">
+              <v-card class="ma-1" outlined dark rounded height="250px">
+                <v-img class="rounded-b" height="250px" :src="post.images[0]"/>
+              </v-card>
+            </v-col>
+          </v-row>
+        </v-col>
+      </v-row>
+    </template>
+  </v-container>
+</template>
+
+<script lang="ts">
+import FiltersDrawerComponent from "@/components/FiltersDrawerComponent.vue"
+import PostCardComponent from "@/components/PostCardComponent.vue"
+import {Component, Ref, Vue} from 'vue-property-decorator'
+import PostService from "@/service/PostService"
+import {getModule} from "vuex-module-decorators"
+import DialogModule from "@/store/DialogModule"
+import LangModule from "@/store/LangModule"
+import Rules from "@/service/tool/Rules"
+import Category from "@/model/Category"
+import Dialog from "@/model/vue/Dialog"
+import Post from "@/model/Post"
+import Tag from "@/model/Tag"
+import Character from "@/model/Character";
+import Artist from "@/model/Artist";
+import ArtistService from "@/service/ArtistService";
+
+@Component( { components: { PostCardComponent, FiltersDrawerComponent } } )
+export default class PostsView extends Vue {
+
+  @Ref() readonly form!: HTMLFormElement
+
+  loading: boolean = false
+  artist: Artist = new Artist()
+  posts: Post[] = []
+  page: number = 1
+  size: number = 10
+
+  //TODO: Expose X-Total-Count header from server.
+
+  totalPosts: number = 0
+
+  get lang() { return getModule(LangModule).lang }
+  get rules() { return Rules }
+
+  created() {
+    this.refresh()
+  }
+
+  async refresh() {
+    await ArtistService.getArtist(this, Number(this.$route.params.id))
+
+    if (this.artist.id) {
+      await this.getPosts()
+    }
+  }
+
+  async getPosts() {
+    await PostService.getPostsByArtist(this, this.artist.id!, this.posts, this.page - 1, this.size)
+  }
+
+  validate() {
+    getModule(DialogModule).showDialog(new Dialog(this.lang.warning, "¿Desea continuar?", () => {
+      alert("Has continuado.")
+    }))
+  }
+
+}
+</script>
+
+<style>
+.v-expansion-panel-content>>> .v-expansion-panel-content__wrap {
+  padding: 0 !important;
+}
+</style>

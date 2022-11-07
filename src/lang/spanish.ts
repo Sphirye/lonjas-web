@@ -16,7 +16,9 @@ export default {
     about: "Acerca",
     search: "Buscar",
 
-    recentPosts: "Post Recientes",
+    recentPosts: "Posts Recientes",
+    post: "Post",
+    posts: "Posts",
     category: "Categoría",
     categories: "Categorías",
     character: "Personaje",
@@ -24,5 +26,7 @@ export default {
     group: "Grupo",
     groups: "Grupos",
     clearFilters: "Limpiar filtros",
+    artist: "Artista",
+    artists: "Artistas"
 
 }

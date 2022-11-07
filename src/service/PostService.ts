@@ -43,4 +43,25 @@ export default class PostService {
             component.loading = false
         }
     }
+
+    static async getPostsByArtist(component: Vue, id: number, posts: Post[], page: number, size: number) {
+        // @ts-ignore
+        component.loading = true
+        try {
+            const response = await component.axios.get(`${ConstantTool.BASE_URL}/public/artist/${id}/post`, {
+                params: {page, size}
+            })
+            let list = JsonTool.jsonConvert.deserializeArray(response.data, Post)
+            posts.splice(0, posts.length)
+            list.forEach(v => posts.push(v))
+            // @ts-ignore
+            // component.totalPosts = Number(response.headers["x-total-count"])
+            console.log(response.headers)
+        } catch (e) {
+
+        } finally {
+            // @ts-ignore
+            component.loading = false
+        }
+    }
 }
