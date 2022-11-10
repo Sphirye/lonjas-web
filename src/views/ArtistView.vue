@@ -5,7 +5,7 @@
         <span class="uni-sans-heavy text-md white--text mx-4">{{ lang.artist }}</span>
       </v-row>
       <v-progress-linear class="my-4" color="grey" :indeterminate="loading"/>
-      <v-row justify="start" align="start">
+      <v-row justify="start" align="start" dense>
         <v-col cols="4">
           <v-card flat class="lonjas-base-2" dark>
             <v-card-title>
@@ -19,7 +19,29 @@
             </v-card-title>
             <v-divider class="mx-3"/>
             <v-card-text>
-              {{ totalPosts }}
+              <div class="px-3">
+
+                <h3 class="mb-10">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum eu lorem quis arcu venenatis pharetra ac at tortor.</h3>
+
+                <v-row align="center">
+                  <v-col cols="10">
+                    <h3 class="font-weight-medium">Posts: {{ totalPosts }}
+                      <v-tooltip top max-width="150px">
+                        <template v-slot:activator="{ on, attrs }">
+                          <span v-on="on" v-bind="attrs" class="grey--text text--darken-1 pointer">?</span>
+                        </template>
+                        <span class="text-center">Cantidad total de posts añadidos a la galería.</span>
+                      </v-tooltip>
+                    </h3>
+                    <h3 class="font-weight-medium">
+                      Last update: 30 min ago.
+                    </h3>
+                  </v-col>
+                  <v-col cols="2">
+                    <v-icon size="30">fab fa-twitter</v-icon>
+                  </v-col>
+                </v-row>
+              </div>
             </v-card-text>
           </v-card>
         </v-col>
@@ -69,8 +91,6 @@ export default class PostsView extends Vue {
   posts: Post[] = []
   page: number = 1
   size: number = 10
-
-  //TODO: Expose X-Total-Count header from server.
 
   totalPosts: number = 0
 

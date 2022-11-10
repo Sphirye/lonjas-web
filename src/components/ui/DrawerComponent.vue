@@ -1,5 +1,5 @@
 <template>
-  <v-navigation-drawer v-model="drawer" clipped app :mobile-breakpoint="0" color="lonjas-base-2" dark>
+  <v-navigation-drawer v-model="drawer" clipped app width="210px" :mobile-breakpoint="0" color="lonjas-base-2" dark>
     <v-list class="my-0 py-0">
       <template v-for="(button,index) in buttons">
         <v-list-item class="d-flex justify-start" :key="index" @click="$router.push(button.route).catch(err => {})">
