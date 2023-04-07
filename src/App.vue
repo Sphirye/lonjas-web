@@ -2,9 +2,9 @@
   <v-app>
     <HeaderComponent/>
     <DrawerComponent/>
-    <v-main class="grey lighten-3">
+    <v-main class="dark-2">
       <transition name="fade" mode="out-in">
-        <router-view/>
+        <router-view class="my-4"/>
       </transition>
     </v-main>
     <SnackbarComponent/>

@@ -1,15 +1,14 @@
 <template>
-	<v-app-bar color="grey darken-4" dark app clipped-left flat>
-    <v-app-bar-nav-icon @click.stop="drawer = !drawer"/>
-		<div class="d-flex align-center pointer" @click="$router.push('/').catch(err => {})">
-			<v-img alt="Vuetify Logo" class="shrink mr-2" contain src="https://cdn.vuetifyjs.com/images/logos/vuetify-logo-dark.png" transition="scale-transition" width="40"/>
-			<v-img alt="Vuetify Name" class="shrink mt-1 hidden-sm-and-down" contain min-width="100" src="https://cdn.vuetifyjs.com/images/logos/vuetify-name-dark.png" width="100"/>
-		</div>
-		<v-spacer/>
-		<v-btn href="https://github.com/vuetifyjs/vuetify/releases/latest" target="_blank" text>
-			<span class="mr-2">Latest Release</span>
-			<v-icon>mdi-open-in-new</v-icon>
-		</v-btn>
+	<v-app-bar color="dark-4" dark app clipped-left flat>
+    <v-app-bar-nav-icon @click.stop="toggleDrawer"/>
+
+    <div class="pointer" @click="$router.push('/').catch(err => {})">
+      <span class="uni-sans-heavy text-35 grey--text text--lighten-1 mx-3">LONJAS</span>
+    </div>
+
+    <v-spacer/>
+
+
 	</v-app-bar>
 </template>
 
@@ -26,5 +25,8 @@ export default class HeaderComponent extends Vue {
 
   get drawer() { return this.drawerModule.drawer }
   set drawer(value: boolean) { this.drawerModule.setDrawer(value) }
+
+  toggleDrawer(){ this.drawerModule.toggle() }
+
 }
 </script>

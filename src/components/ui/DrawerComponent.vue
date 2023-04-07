@@ -1,14 +1,21 @@
 <template>
-  <v-navigation-drawer v-model="drawer" color="grey lighten-3" clipped app :mobile-breakpoint="0">
+  <v-navigation-drawer v-model="drawer" clipped app color="dark-3" width="210" :mobile-breakpoint="0">
     <v-list class="my-0 py-0">
-      <v-list-item-group>
-        <template v-for="(button,index) in buttons">
-          <v-list-item class="d-flex justify-start" :key="index" @click="$router.push(button.url).catch(err => {})">
-            <span class="grey--text text--darken-2 underline-on-hover my-auto">{{ button.title.toUpperCase() }}</span>
-          </v-list-item>
-          <v-divider v-if="index < buttons.length - 1" :key="`${index}-divider`" class="grey lighten-2 mx-2"/>
-        </template>
-      </v-list-item-group>
+      <v-list dark class="my-0 py-0" dense>
+        <v-list-item-group class="pa-2" mandatory>
+          <template v-for="(item, key) in drawerList">
+            <template v-if="item.subheader != null">
+              <v-divider class="grey mx-1 mt-1 mb-2"/>
+              <v-subheader class="text-uppercase" style="height: 30px">{{item.subheader}}</v-subheader>
+            </template>
+            <v-list-item v-else dense class="pl-3 mb-1" style="padding: 0px 10px !important;" @click="$router.push(item.to).catch(() => {})">
+              <v-list-item-content>
+                <v-list-item-title class="text-20 mx-0 grey--text text--lighten-1">{{ item.title }}</v-list-item-title>
+              </v-list-item-content>
+            </v-list-item>
+          </template>
+        </v-list-item-group>
+      </v-list>
     </v-list>
   </v-navigation-drawer>
 </template>
@@ -18,6 +25,8 @@ import {Component, Vue} from "vue-property-decorator"
 import DrawerModule from "@/store/DrawerModule"
 import LangModule from "@/store/LangModule"
 import {getModule} from "vuex-module-decorators"
+import drawerList from "@/service/tool/DrawerList"
+import Authority from "@/model/Authority";
 
 @Component({ components: { } })
 export default class DrawerComponent extends Vue {
@@ -27,11 +36,8 @@ export default class DrawerComponent extends Vue {
 
   get drawer() { return this.drawerModule.drawer }
   set drawer(value: boolean) { this.drawerModule.setDrawer(value) }
+  get drawerList() { return drawerList }
 
-  buttons = [
-    { title: this.lang.home, url: "/", id: 1 },
-    { title: this.lang.about, url: "/about", id: 2 },
-  ]
 }
 </script>
 

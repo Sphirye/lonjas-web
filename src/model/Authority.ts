@@ -1,4 +1,4 @@
-import {JsonConverter, JsonCustomConvert, JsonObject, JsonProperty} from "json2typescript";
+import {JsonConverter, JsonCustomConvert, JsonObject, JsonProperty} from "json2typescript"
 
 export enum AuthorityName {
     SUPER_ADMIN = "SUPER_ADMIN",

@@ -38,12 +38,88 @@
 
 /* TEXT */
 
-* {
+@font-face {
+    font-family: "Uni Sans Heavy";
+    src: local("Uni Sans Heavy"),
+    url("../assets/fonts/uni-sans/uni-sans-heavy.woff2") format("woff2"),
+    url("../assets/fonts/uni-sans/uni-sans-heavy.woff") format("woff");
+
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: "Uni Sans Thin";
+    src: local("Uni Sans Thin"),
+    url("../assets/fonts/uni-sans/uni-sans-thin.woff2") format("woff2"),
+    url("../assets/fonts/uni-sans/uni-sans-thin.woff") format("woff");
+
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
     font-family: 'Work Sans', sans-serif;
 }
 
+.work-sans { font-family: "Work Sans" }
+
+
+.uni-sans-heavy { font-family: "Uni Sans Heavy"; }
+.uni-sans-thin { font-family: "Uni Sans Thin"; }
+
+/*      IM NOT LEARNING SCSS TODAY MY SON       */
+.text-15 {
+    font-size: 15px !important;
+    line-height: 20px !important;
+}
+
+.text-20 {
+    font-size: 20px !important;
+    line-height: 25px !important;
+}
+
+
+.text-25 {
+    font-size: 25px !important;
+    line-height: 30px !important;
+}
+
+
+.text-30 {
+    font-size: 30px !important;
+    line-height: 35px !important;
+}
+
+
+
+.text-35 {
+    font-size: 35px !important;
+    line-height: 40px !important;
+}
 /*  RANDOM  */
 
 .pointer {
     cursor: pointer;
+}
+
+.line-clamp-1 {
+    display: -webkit-box;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+.line-clamp-2 {
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+.line-clamp-3 {
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
 }
