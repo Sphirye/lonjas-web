@@ -7,53 +7,13 @@
       <v-row align="start" dense>
 
         <v-col cols="4">
-          <v-card flat class="lonjas-base-2" dark>
-            <v-card-title class="mx-3">
-              <v-avatar size="128" class="mr-4">
-                <v-img contain :src="artist.item.twitter.profileImageUrl"/>
-              </v-avatar>
-              <div>
-                <span class="text-20 font-weight-bold grey--text text--lighten-2">{{ artist.item.twitter.name }}</span>
-                <br/>
-                <span class="font-weight-medium grey--text">@{{ artist.item.twitter.username }}</span>
-              </div>
-            </v-card-title>
-            <v-divider class="mx-3"/>
-            <v-card-text>
-              <div>
-
-                <p style="white-space: pre-wrap;" class="mx-4 font-weight-medium text-15">{{ artist.item.twitter.description }}</p>
-
-                <v-divider class="my-3"/>
-                <div class="mx-3">
-                  <v-row align="center">
-                    <v-col cols="10">
-                      <h3 class="font-weight-medium">Posts:  totalPosts
-                        <v-tooltip top max-width="150px">
-                          <template v-slot:activator="{ on, attrs }">
-                            <span v-on="on" v-bind="attrs" class="grey--text text--darken-1 pointer">?</span>
-                          </template>
-                          <span class="text-center">Cantidad total de posts añadidos a la galería.</span>
-                        </v-tooltip>
-                      </h3>
-                      <h3 class="font-weight-medium">
-                        Last update: 30 min ago.
-                      </h3>
-                    </v-col>
-                    <v-col cols="2">
-                      <v-icon size="30">fab fa-twitter</v-icon>
-                    </v-col>
-                  </v-row>
-                </div>
-              </div>
-            </v-card-text>
-          </v-card>
+          <ArtistCardComponent :artist="artist.item"/>
         </v-col>
 
         <v-col cols="8">
           <v-row dense>
             <template v-for="(post) in posts.items">
-              <v-col cols="6" sm="4" md="4" lg="auto">
+              <v-col cols="auto">
                 <PostCardComponent width="150px" height="150px" :post="post"/>
               </v-col>
             </template>
@@ -87,15 +47,19 @@ import DialogModule from "@/store/DialogModule"
 import LangModule from "@/store/LangModule"
 import Rules from "@/service/tool/Rules"
 import Dialog from "@/model/vue/Dialog"
-import Artist from "@/model/Artist"
+import Artist, {Source} from "@/model/Artist"
 import Post from "@/model/Post";
 import PostService from "@/service/PostService";
 import RouterTool from "@/service/tool/RouterTool";
 import Tab from "@/model/vue/Tab";
 import Handler from "@/handlers/Handler";
 import {MultipleItem, SingleItem} from "@/handlers/interfaces/ContentUI";
+import ArtistCardComponent from "@/components/ArtistCardComponent.vue";
 
-@Component( { components: { PostCardComponent } } )
+@Component( {
+  computed: { Source() { return Source } },
+  components: {ArtistCardComponent, PostCardComponent },
+} )
 export default class PostsView extends Vue {
 
   @Ref() readonly form!: HTMLFormElement

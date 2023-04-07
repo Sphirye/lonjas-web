@@ -1,3 +1,7 @@
+.pointer {
+    cursor: pointer;
+}
+
 .custom-borderline {
     /* you can change these variables to control the border */
     --border-color: #8659b5;
@@ -58,15 +62,11 @@
     font-style: normal;
 }
 
-@font-face {
-    font-family: 'Work Sans', sans-serif;
-}
+@font-face {  font-family: 'Work Sans', sans-serif;  }
 
-.work-sans { font-family: "Work Sans" }
-
-
-.uni-sans-heavy { font-family: "Uni Sans Heavy"; }
-.uni-sans-thin { font-family: "Uni Sans Thin"; }
+.work-sans { font-family: "Work Sans", serif }
+.uni-sans-heavy { font-family: "Uni Sans Heavy", serif; }
+.uni-sans-thin { font-family: "Uni Sans Thin", serif; }
 
 /*      IM NOT LEARNING SCSS TODAY MY SON       */
 .text-15 {

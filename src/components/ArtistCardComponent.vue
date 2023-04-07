@@ -1,14 +1,14 @@
 <template>
   <v-card flat class="lonjas-base-2" dark>
     <v-card-title class="mx-3">
-      <v-avatar size="128" class="mr-4">
+      <v-avatar size="128" class="mr-4 pointer" @click="toArtistPage">
         <v-img contain :src="artist.twitter.profileImageUrl"/>
       </v-avatar>
 
       <div v-if="artist.source === Source.TWITTER">
-        <span class="text-20 font-weight-bold grey--text text--lighten-2">{{ artist.twitter.name }}</span>
+        <span class="text-20 font-weight-bold grey--text text--lighten-2 pointer" @click="toArtistPage">{{ artist.twitter.name }}</span>
         <br/>
-        <span class="font-weight-medium grey--text">@{{ artist.twitter.username }}</span>
+        <span class="font-weight-medium grey--text pointer" @click="toArtistPage">@{{ artist.twitter.username }}</span>
       </div>
 
       <div v-if="artist.source === Source.DEVIANTART">
@@ -73,20 +73,18 @@ import Handler from "@/handlers/Handler";
 import {MultipleItem, SingleItem} from "@/handlers/interfaces/ContentUI";
 
 @Component( {
-  computed: {
-    Source() {
-      return Source
-    }
-  },
-  components: { PostCardComponent } } )
-export default class A extends Vue {
+  computed: { Source() { return Source } },
+  components: { PostCardComponent } }
+)
+
+export default class ArtistCardComponent extends Vue {
+
   @Prop() readonly artist!: Artist
   get lang() { return getModule(LangModule).lang }
+
+  toArtistPage() {
+    this.$router.push("/artists/" + this.artist.id).catch(() => {})
+  }
+
 }
 </script>
-
-<style>
-.v-expansion-panel-content>>> .v-expansion-panel-content__wrap {
-  padding: 0 !important;
-}
-</style>

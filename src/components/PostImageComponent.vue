@@ -3,6 +3,7 @@
     <v-img width="100%" height="100%" contain :src="images[index]">
 
       <v-row no-gutters style="position: absolute; top: 50%; transform: translateY(-50%); width: 100%" class="d-flex my-auto px-3">
+
         <v-btn icon x-large @click="previousIndex">
           <v-icon color="white">fas fa-angle-left</v-icon>
         </v-btn>
