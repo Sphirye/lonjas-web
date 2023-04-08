@@ -1,5 +1,5 @@
 <template>
-  <v-container fluid class="px-8">
+  <v-container fluid class="px-4">
 
     <v-progress-linear class="mb-4" color="grey" :indeterminate="loading"/>
 
@@ -7,7 +7,7 @@
       <v-row align="start" dense>
 
         <v-col cols="4">
-          <ArtistCardComponent :artist="artist.item"/>
+          <ArtistCardComponent :artist="artist.item" :total-post-count="posts.totalItems"/>
         </v-col>
 
         <v-col cols="8">

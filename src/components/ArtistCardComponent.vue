@@ -26,14 +26,9 @@
         <div class="mx-3">
           <v-row align="center">
             <v-col cols="10">
-              <h3 class="font-weight-medium">Posts: totalPosts
-                <v-tooltip top max-width="150px">
-                  <template v-slot:activator="{ on, attrs }">
-                    <span v-on="on" v-bind="attrs" class="grey--text text--darken-1 pointer">?</span>
-                  </template>
-                  <span class="text-center">Cantidad total de posts añadidos a la galería.</span>
-                </v-tooltip>
-              </h3>
+              <template v-if="totalPostCount">
+                <h3 class="font-weight-medium">Posts: {{ totalPostCount }}</h3>
+              </template>
               <h3 class="font-weight-medium">
                 Last update: 30 min ago.
               </h3>
@@ -80,6 +75,7 @@ import {MultipleItem, SingleItem} from "@/handlers/interfaces/ContentUI";
 export default class ArtistCardComponent extends Vue {
 
   @Prop() readonly artist!: Artist
+  @Prop() readonly totalPostCount?: number
   get lang() { return getModule(LangModule).lang }
 
   toArtistPage() {

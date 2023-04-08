@@ -6,8 +6,8 @@
       <v-sheet class="transparent mx-2" dark>
         <v-text-field
             @click:clear="search = ''; resetAll()"
-            v-model="search" v-debounce:250ms="resetAll"
-            clearable hide-details dense outlined :label="lang.search"
+            v-model="search" clearable hide-details dense outlined :label="lang.search"
+            append-icon="mdi-magnify" @keydown.enter="refresh"
         />
       </v-sheet>
     </v-row>
@@ -44,7 +44,6 @@ export default class ArtistsView extends Vue {
   page: number = 1
   size: number = 20
   search: string = ""
-  showSearchBar: boolean = false
 
   get lang() { return getModule(LangModule).lang }
 
