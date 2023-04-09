@@ -1,5 +1,5 @@
 <template>
-	<v-app-bar color="dark-4" dark app clipped-left flat>
+	<v-app-bar color="dark-4" dark app clipped-left clipped-right flat>
     <v-app-bar-nav-icon @click.stop="toggleDrawer"/>
 
     <div class="pointer" @click="$router.push('/').catch(err => {})">
@@ -7,7 +7,6 @@
     </div>
 
     <v-spacer/>
-
 
 	</v-app-bar>
 </template>
@@ -22,9 +21,6 @@ import DrawerModule from "@/store/DrawerModule";
 export default class HeaderComponent extends Vue {
 	lang = getModule(LangModule).lang
   drawerModule:DrawerModule = getModule(DrawerModule)
-
-  get drawer() { return this.drawerModule.drawer }
-  set drawer(value: boolean) { this.drawerModule.setDrawer(value) }
 
   toggleDrawer(){ this.drawerModule.toggle() }
 

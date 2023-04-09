@@ -1,8 +1,8 @@
-import Session from "@/model/responses/Session";
-import {Action, Module, Mutation, VuexModule} from "vuex-module-decorators";
-import store from "@/store/index";
-import ConstantTool from "@/service/tool/ConstantTool";
-import CryptoTool from "@/service/tool/CryptoTool";
+import {Action, Module, Mutation, VuexModule} from "vuex-module-decorators"
+import ConstantTool from "@/service/tool/ConstantTool"
+import CryptoTool from "@/service/tool/CryptoTool"
+import Session from "@/model/responses/Session"
+import store from "@/store/index"
 
 @Module({dynamic: true, store, name: "SessionModule"})
 export default class SessionModule extends VuexModule {

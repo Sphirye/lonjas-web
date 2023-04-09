@@ -3,7 +3,7 @@
     <v-list class="my-0 py-0">
       <v-list dark class="my-0 py-0" dense>
         <v-list-item-group class="pa-2" mandatory>
-          <template v-for="(item, key) in drawerList">
+          <template v-for="(item) in drawerList">
             <template v-if="item.subheader != null">
               <v-divider class="grey mx-1 mt-1 mb-2"/>
               <v-subheader class="text-uppercase" style="height: 30px">{{item.subheader}}</v-subheader>
@@ -26,9 +26,8 @@ import DrawerModule from "@/store/DrawerModule"
 import LangModule from "@/store/LangModule"
 import {getModule} from "vuex-module-decorators"
 import drawerList from "@/service/tool/DrawerList"
-import Authority from "@/model/Authority";
 
-@Component({ components: { } })
+@Component
 export default class DrawerComponent extends Vue {
 
   drawerModule:DrawerModule = getModule(DrawerModule)

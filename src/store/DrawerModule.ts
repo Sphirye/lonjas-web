@@ -10,6 +10,7 @@ export default class DrawerModule extends VuexModule{
     toggle(){
         this.drawer = !this.drawer
     }
+
     @Mutation
     setDrawer(drawer:boolean){
         this.drawer = drawer
