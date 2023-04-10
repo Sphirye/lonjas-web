@@ -18,7 +18,7 @@
                     <v-subheader>Categorias:</v-subheader>
                     <div class="d-flex flex-column">
                       <template v-for="(category) in post.item.categories">
-                        <a class="my-0 text-start" @click="$router.push('/posts')">
+                        <a class="my-0 text-start" @click="$router.push('/categories')">
                           {{ category.name }}
                         </a>
                       </template>
@@ -33,7 +33,7 @@
                       <template v-for="(character) in post.item.characters">
                         <a
                             class="my-0 text-start"
-                            @click="$router.push('/posts')"
+                            @click="$router.push('/characters')"
                         >
                           {{ character.name }}
                         </a>

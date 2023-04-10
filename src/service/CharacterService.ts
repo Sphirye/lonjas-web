@@ -1,8 +1,8 @@
-import ConstantTool from "@/service/tool/ConstantTool";
-import axios from "axios";
-import Character from "@/model/Character";
-import JsonTool from "@/service/tool/JsonTool";
-import Response from "@/model/responses/Response";
+import ConstantTool from "@/service/tool/ConstantTool"
+import Response from "@/model/responses/Response"
+import JsonTool from "@/service/tool/JsonTool"
+import Character from "@/model/Character"
+import axios from "axios"
 
 export default class CharacterService {
 

@@ -4,8 +4,10 @@
       <v-list dark class="my-0 py-0" dense>
         <v-list-item-group class="pa-2" mandatory>
           <template v-for="(item) in drawerList">
+            <template v-if="item.divider">
+              <v-divider class="grey darken-2 mx-1 my-2"/>
+            </template>
             <template v-if="item.subheader != null">
-              <v-divider class="grey mx-1 mt-1 mb-2"/>
               <v-subheader class="text-uppercase" style="height: 30px">{{item.subheader}}</v-subheader>
             </template>
             <v-list-item v-else dense class="pl-3 mb-1" style="padding: 0px 10px !important;" @click="$router.push(item.to).catch(() => {})">

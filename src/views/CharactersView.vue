@@ -1,34 +1,31 @@
 <template>
   <v-container fluid>
     <v-row dense align="center">
-      <h2 class="uni-sans-heavy white--text mx-4">{{ lang.posts }}</h2>
+      <h2 class="uni-sans-heavy white--text mx-4">{{ lang.characters }}</h2>
       <v-spacer/>
       <v-sheet color="transparent">
         <v-text-field
             clearable hide-details dense outlined dark rounded append-icon="mdi-magnify"
             :label="lang.search" @keydown.enter="refresh" @click:clear="refresh"
+            v-model="search"
         />
       </v-sheet>
-      <v-btn icon dark class="mx-4" large @click="toggleDrawer"><v-icon>mdi-filter-menu-outline</v-icon></v-btn>
 
     </v-row>
 
     <v-progress-linear class="my-4" color="grey" :indeterminate="loading"/>
 
     <v-row align="start" dense>
-      <template v-for="(post) in posts.items">
+      <template v-for="(character) in characters.items">
         <v-col cols="auto">
-         <PostCardComponent :post="post"/>
+          <v-card flat dark>
+            <v-card-title class="font-weight-regular">
+              {{ character.name }}
+            </v-card-title>
+          </v-card>
         </v-col>
       </template>
     </v-row>
-
-    <FilterPostDrawerComponent
-        v-model="drawer" @close="toggleDrawer" @clear="clearFilters"
-        :selectedTags.sync="tags"
-        :selectedCategories.sync="categories"
-        :selectedCharacters.sync="characters" @search="refresh"
-    />
 
   </v-container>
 </template>
@@ -45,42 +42,32 @@ import Post from "@/model/Post";
 import PostService from "@/service/PostService";
 import PostCardComponent from "@/components/PostCardComponent.vue";
 import FilterPostDrawerComponent from "@/components/FilterPostDrawerComponent.vue";
+import Category from "@/model/Category";
+import CategoryService from "@/service/CategoryService";
+import CharacterService from "@/service/CharacterService";
+import Character from "@/model/Character";
 
-@Component({ components: {FilterPostDrawerComponent, PostCardComponent } })
-export default class PostsView extends Vue {
-
-  drawer: boolean = false
+@Component
+export default class CharactersView extends Vue {
 
   lang = getModule(LangModule).lang
   loading: boolean = false
-  tag: Tag = new Tag()
   search: string = ""
   page: number = 1
   size: number = 20
-  posts: MultipleItem<Post> = { items: [], totalItems: 0 }
 
-  tags: number[] = []
-  categories: number[] = []
-  characters: number[] = []
+  characters: MultipleItem<Character> = { totalItems: 0, items: [] }
 
   created() { this.refresh() }
 
   async refresh() {
 
     try {
-      await Handler.getItems(this, this.posts, () => PostService.getPublicPosts(
-          this.page - 1, this.size, null, this.categories, this.characters, this.tags)
-      )
+      await Handler.getItems(this, this.characters, () => CharacterService.getPublicCharacters(
+          this.page - 1, this.size, this.search
+      ))
     } catch (e) { console.log(e) }
   }
 
-  toggleDrawer() { this.drawer = !this.drawer }
-
-  clearFilters() {
-    this.categories = []
-    this.tags.splice(0, this.tags.length)
-    this.characters.splice(0, this.characters.length)
-    this.refresh()
-  }
 }
 </script>
