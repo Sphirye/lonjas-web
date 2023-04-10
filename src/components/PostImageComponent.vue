@@ -1,5 +1,5 @@
 <template>
-  <v-card :width="width" :height="height" height="600px" outlined color="dark-3">
+  <v-card :width="width" :height="height" outlined color="dark-3">
     <v-img width="100%" height="100%" contain :src="images[index]">
 
       <v-row no-gutters style="position: absolute; top: 50%; transform: translateY(-50%); width: 100%" class="d-flex my-auto px-3">
@@ -33,7 +33,7 @@ export default class PostImageComponent extends Vue {
 
   @Prop() readonly post!: Post
   @Prop({ default: '100%' }) readonly width!: string
-  @Prop({ default: '200px' }) readonly height!: string
+  @Prop({ default: '600px' }) readonly height!: string
 
   index: number = 0
 

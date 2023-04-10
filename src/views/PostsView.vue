@@ -49,7 +49,7 @@ import FilterPostDrawerComponent from "@/components/FilterPostDrawerComponent.vu
 @Component({ components: {FilterPostDrawerComponent, PostCardComponent } })
 export default class PostsView extends Vue {
 
-  drawer: boolean = true
+  drawer: boolean = false
 
   lang = getModule(LangModule).lang
   loading: boolean = false
