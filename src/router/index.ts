@@ -11,6 +11,7 @@ const routes: Array<RouteConfig> = [
     {path: '/artists', name: 'Artists', component: () => import('../views/ArtistsView.vue')},
     {path: '/artists/:id', name: 'Artist', component: () => import('../views/ArtistView.vue')},
     {path: '/categories', name: 'Categories', component: () => import('../views/CategoriesView.vue')},
+    {path: '/categories/:id', name: 'Category', component: () => import('../views/CategoryView.vue')},
     {path: '/characters', name: 'Characters', component: () => import('../views/CharactersView.vue')},
 ]
 

@@ -18,19 +18,6 @@
               </v-col>
             </template>
           </v-row>
-
-
-          <template v-if="false">
-            <v-row no-gutters align="center" dense>
-              <v-tabs v-model="tab" centered background-color="transparent">
-                <v-tab v-for="item in tabs" :key="item.route" active-class="grey darken-2 grey--text">
-                  <span class="uni-sans-heavy grey--text text--lighten-2 text-20">{{ item.name }}</span>
-                </v-tab>
-              </v-tabs>
-            </v-row>
-            <v-tabs-items v-model="tab" class="transparent">
-            </v-tabs-items>
-          </template>
         </v-col>
       </v-row>
     </template>

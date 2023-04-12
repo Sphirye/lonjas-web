@@ -18,7 +18,7 @@
                     <v-subheader>Categorias:</v-subheader>
                     <div class="d-flex flex-column">
                       <template v-for="(category) in post.item.categories">
-                        <a class="my-0 text-start" @click="$router.push('/categories')">
+                        <a class="my-0 text-start" @click="$router.push('/categories/' + category.id)">
                           {{ category.name }}
                         </a>
                       </template>
@@ -31,10 +31,7 @@
                     <v-subheader>Personajes:</v-subheader>
                     <div class="d-flex flex-column">
                       <template v-for="(character) in post.item.characters">
-                        <a
-                            class="my-0 text-start"
-                            @click="$router.push('/characters')"
-                        >
+                        <a class="my-0 text-start">
                           {{ character.name }}
                         </a>
                       </template>
@@ -47,7 +44,7 @@
                     <v-subheader>Tags:</v-subheader>
                     <div class="d-flex flex-column">
                       <template v-for="(tag) in post.item.tags">
-                        <a class="my-0 text-start" @click="$router.push('/tags')">
+                        <a class="my-0 text-start">
                           {{ tag.name }}
                         </a>
                       </template>

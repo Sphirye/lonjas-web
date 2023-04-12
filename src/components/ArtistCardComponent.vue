@@ -30,7 +30,7 @@
                 <h3 class="font-weight-medium">Posts: {{ totalPostCount }}</h3>
               </template>
               <h3 class="font-weight-medium">
-                Last update: 30 min ago.
+                Last update:
               </h3>
             </v-col>
           </v-row>

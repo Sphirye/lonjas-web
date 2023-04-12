@@ -18,7 +18,7 @@
     <v-row align="start" dense>
       <template v-for="(category) in categories.items">
         <v-col cols="auto">
-          <v-card flat dark>
+          <v-card flat dark @click="$router.push('/categories/' + category.id)">
             <v-card-title class="font-weight-regular">
               {{ category.name }}
             </v-card-title>
