@@ -22,6 +22,11 @@
             <v-card-title class="font-weight-regular">
               {{ character.name }}
             </v-card-title>
+            <v-card-subtitle class="blue--text text--accent-1">
+              <span class="pointer" @click="$router.push('/categories/' + character.category.id)">
+                {{ character.category.name }}
+              </span>
+            </v-card-subtitle>
           </v-card>
         </v-col>
       </template>

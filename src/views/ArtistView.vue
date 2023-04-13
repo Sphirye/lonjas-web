@@ -11,14 +11,19 @@
         </v-col>
 
         <v-col cols="8">
-          <v-row dense>
-            <template v-for="(post) in posts.items">
-              <v-col cols="auto">
-                <PostCardComponent width="150px" height="150px" :post="post"/>
-              </v-col>
-            </template>
-          </v-row>
+          <v-sheet color="transparent" min-height="550px">
+            <v-row dense>
+              <template v-for="(post) in posts.items">
+                <v-col cols="auto">
+                  <PostCardComponent width="150px" height="150px" :post="post"/>
+                </v-col>
+              </template>
+            </v-row>
+          </v-sheet>
         </v-col>
+      </v-row>
+      <v-row dense justify="end" align="center">
+        <v-pagination v-model="page" :length="pageCount" :total-visible="8"/>
       </v-row>
     </template>
   </v-container>
@@ -53,7 +58,7 @@ export default class PostsView extends Vue {
 
   tab = 0
   tabs: Tab[] = [
-    { name: "Twitter", route: "/twitter"  },
+    { name: "Twitter", route: "/twitter"  }
   ]
 
   artist: SingleItem<Artist> = { item: new Artist() }
@@ -62,6 +67,8 @@ export default class PostsView extends Vue {
   post: Post = new Post()
   page: number = 1
   size: number = 10
+  pageCount: number = 0
+
   loading: boolean = false
 
   get lang() { return getModule(LangModule).lang }
