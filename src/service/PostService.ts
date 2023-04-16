@@ -15,8 +15,8 @@ export default class PostService {
     }
 
     static async getPublicPosts(
-        page: number, size: number, artistId: Nullable<number>, categoryIds: Nullable<number[]>,
-        characterIds: Nullable<number[]>, tagIds: Nullable<number[]>
+        page: number, size: number, artistId: Nullable<number> = null, categoryIds: Nullable<number[]> = null,
+        characterIds: Nullable<number[]> = null, tagIds: Nullable<number[]> = null
     ): Promise<Response<Post[]>> {
         try {
             const response = await axios.get(`${ConstantTool.BASE_URL}/public/post`, {

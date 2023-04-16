@@ -1,5 +1,5 @@
 <template>
-  <v-card flat class="lonjas-base-2" dark>
+  <v-card flat dark>
     <v-card-title class="mx-3">
       <v-avatar size="128" class="mr-4 pointer" @click="toArtistPage">
         <v-img contain :src="artist.twitter.profileImageUrl"/>
