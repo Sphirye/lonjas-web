@@ -18,7 +18,7 @@
 
       <v-col cols="6">
         <v-card color="dark-4" dark flat>
-          <v-subheader class="my-0 my-0">Posts recientes:</v-subheader>
+          <v-subheader class="my-0 my-0">Artistas recientes:</v-subheader>
           <v-card-text>
             <div class="d-flex justify-start flex-wrap">
               <template v-for="(artist) in artists.items">
