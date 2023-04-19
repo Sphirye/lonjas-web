@@ -71,7 +71,11 @@
         </v-col>
 
         <v-col cols="8" class="d-flex flex-column">
-          <PostImageComponent :post="post.item"/>
+          <v-card outlined dark color="dark-4">
+            <v-card-text>
+              <PostImageComponent :post="post.item"/>
+            </v-card-text>
+          </v-card>
         </v-col>
       </v-row>
     </template>
