@@ -1,9 +1,12 @@
 <template>
   <v-footer color="dark-2">
     <v-row justify="center" no-gutters>
-      <v-btn color="white" text rounded class="my-2">Button</v-btn>
-      <v-btn color="white" text rounded class="my-2">Button</v-btn>
-      <v-btn color="white" text rounded class="my-2">Button</v-btn>
+      <v-btn
+          fab color="dark-4" depressed width="50px" height="50px"
+          target="_blank" :href="`https://twitter.com/lonjas_archive`"
+      >
+        <v-icon color="grey lighten-4">fab fa-twitter</v-icon>
+      </v-btn>
     </v-row>
     <v-col class="py-4 text-center white--text" cols="12">
       {{ new Date().getFullYear() }} — <strong>Lonjas</strong>

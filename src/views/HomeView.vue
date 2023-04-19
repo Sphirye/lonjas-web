@@ -8,7 +8,7 @@
             <v-row dense justify="center">
               <template v-for="(post) in posts.items">
                 <v-col cols="auto">
-                  <PostCardComponent width="180px" height="250px" :post="post"/>
+                  <PostCardComponent width="125px" height="125px" :post="post"/>
                 </v-col>
               </template>
             </v-row>
