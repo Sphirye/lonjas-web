@@ -54,26 +54,22 @@
 
 
 <script lang="ts">
-import ArtistCardComponent from "@/components/ArtistCardComponent.vue"
-import PostImageComponent from "@/components/PostImageComponent.vue"
-import PostCardComponent from "@/components/PostCardComponent.vue"
 import {MultipleItem, SingleItem} from "@/handlers/interfaces/ContentUI"
-import {Component, Ref, Vue, Watch} from 'vue-property-decorator'
+import PostCardComponent from "@/components/PostCardComponent.vue"
+import {Component, Mixins, Ref, Vue, Watch} from 'vue-property-decorator'
+import CharacterService from "@/service/CharacterService"
+import CategoryService from "@/service/CategoryService"
+import {getModule} from "vuex-module-decorators"
 import PostService from "@/service/PostService"
+import LangModule from "@/store/LangModule"
+import Character from "@/model/Character"
 import Handler from "@/handlers/Handler"
-import Artist, {Source} from "@/model/Artist"
-import Post, {Type} from "@/model/Post";
-import Category from "@/model/Category";
-import CategoryService from "@/service/CategoryService";
-import {getModule} from "vuex-module-decorators";
-import LangModule from "@/store/LangModule";
-import Character from "@/model/Character";
-import CharacterService from "@/service/CharacterService";
+import Post, {Type} from "@/model/Post"
+import Category from "@/model/Category"
+import PaginationMixin from "@/mixins/PaginationMixin";
 
-@Component({
-  components: {PostCardComponent}
-})
-export default class CategoryView extends Vue {
+@Component({ components: { PostCardComponent } })
+export default class CategoryView extends Mixins(PaginationMixin) {
 
   get lang() { return getModule(LangModule).lang }
 
@@ -91,14 +87,13 @@ export default class CategoryView extends Vue {
 
   loading: boolean = false
 
-  created() {
-    this.refresh()
-  }
+  created() { this.refresh() }
 
   async getCharacters() {
     await Handler.getItems(this, this.characters, () =>
         CharacterService.getPublicCategoryCharacters(this.charactersPage - 1, this.charactersSize, null, this.category.item.id!!)
     )
+
     this.charactersPageCount = Math.ceil(this.characters.totalItems! / this.charactersSize)
   }
 

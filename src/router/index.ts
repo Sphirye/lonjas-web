@@ -1,5 +1,6 @@
 import Vue from 'vue'
 import VueRouter, {RouteConfig} from 'vue-router'
+import vuetify from "@/config/vuetify";
 
 Vue.use(VueRouter)
 
@@ -16,5 +17,10 @@ const routes: Array<RouteConfig> = [
 ]
 
 const router = new VueRouter({ mode: 'history',  base: process.env.BASE_URL, routes })
+
+router.beforeEach(async(to, from, next) => {
+    await window.scrollTo(0, 0)
+    await next()
+})
 
 export default router

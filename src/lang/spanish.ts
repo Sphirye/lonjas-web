@@ -33,5 +33,6 @@ export default {
     artists: "Artistas",
     user: "Usuario",
     users: "Usuarios",
+    recentArtists: "Artistas recientes:",
 
 }
