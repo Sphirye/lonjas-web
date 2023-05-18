@@ -9,7 +9,6 @@
       <v-btn icon dark class="mx-4" large @click="toggleDrawer">
         <v-icon>mdi-filter-menu-outline</v-icon>
       </v-btn>
-
     </v-row>
 
     <v-progress-linear class="my-4" color="grey" :indeterminate="loading"/>
@@ -29,7 +28,11 @@
       <v-pagination class="white--text" v-model="page" :length="pageCount" :total-visible="8"/>
     </v-row>
 
-    <FilterPostDrawerComponent v-model="drawer" @close="toggleDrawer" @clear="clearFilters" :selectedTags.sync="tags" :selectedCategories.sync="categories" :selectedCharacters.sync="characters" @search="refresh"/>
+    <FilterPostDrawerComponent
+        v-model="drawer" @close="toggleDrawer" @clear="clearFilters"
+        :selectedTags.sync="tags" :selectedCategories.sync="categories" :selectedCharacters.sync="characters"
+        @search="refresh"
+    />
 
   </v-container>
 </template>
@@ -47,6 +50,9 @@ import PostService from "@/service/PostService";
 import PostCardComponent from "@/components/PostCardComponent.vue";
 import FilterPostDrawerComponent from "@/components/FilterPostDrawerComponent.vue";
 import PaginationMixin from "@/mixins/PaginationMixin";
+import Category from "@/model/Category";
+import Character from "@/model/Character";
+import CustomTools from "@/service/tool/CustomTools";
 
 @Component({components: {FilterPostDrawerComponent, PostCardComponent}})
 export default class PostsView extends Mixins(PaginationMixin) {
@@ -58,31 +64,32 @@ export default class PostsView extends Mixins(PaginationMixin) {
     size: number = 40
     posts: MultipleItem<Post> = { items: [], totalItems: 0 }
 
-    tags: number[] = []
-    categories: number[] = []
-    characters: number[] = []
+    tags: Tag[] = []
+    categories: Category[] = []
+    characters: Character[] = []
 
     created() { this.refresh() }
 
     async refresh() {
-
         try {
             await Handler.getItems(this, this.posts, () => PostService.getPublicPosts(
-                this.page - 1, this.size, null, this.categories, this.characters, this.tags)
+                this.page - 1, this.size, null, this.toIds(this.categories), this.toIds(this.characters), this.toIds(this.tags))
             )
             this.setPageCount(this.posts.totalItems!!)
         } catch (e) { console.log(e) }
     }
 
-    toggleDrawer() {
-        this.drawer = !this.drawer
-    }
+    toggleDrawer() { this.drawer = !this.drawer }
 
     clearFilters() {
         this.categories = []
         this.tags.splice(0, this.tags.length)
         this.characters.splice(0, this.characters.length)
         this.refresh()
+    }
+
+    toIds(array: (Category | Character | Tag)[]) {
+        return array.map(v => v.id!!)
     }
 
     @Watch("page")

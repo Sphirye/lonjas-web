@@ -14,6 +14,7 @@ const routes: Array<RouteConfig> = [
     {path: '/categories', name: 'Categories', component: () => import('../views/CategoriesView.vue')},
     {path: '/categories/:id', name: 'Category', component: () => import('../views/CategoryView.vue')},
     {path: '/characters', name: 'Characters', component: () => import('../views/CharactersView.vue')},
+    {path: '/tags', name: 'Tags', component: () => import('../views/TagsView.vue')},
 ]
 
 const router = new VueRouter({ mode: 'history',  base: process.env.BASE_URL, routes })

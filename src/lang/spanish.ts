@@ -34,5 +34,7 @@ export default {
     user: "Usuario",
     users: "Usuarios",
     recentArtists: "Artistas recientes:",
+    tag: "Tag",
+    tags: "Tags",
 
 }

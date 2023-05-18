@@ -10,6 +10,7 @@ let drawerList: DrawerItem[] = [
     { title: lang.artists, to: "/artists", icon: "mdi-home", global: true },
     { title: lang.categories, to: "/categories", icon: "mdi-home", global: true },
     { title: lang.characters, to: "/characters", icon: "mdi-home", global: true },
+    { title: lang.tags, to: "/tags", icon: "mdi-home", global: true },
     { title: lang.about, to: "/about", icon: "mdi-home", global: true, divider: true },
 ]
 
