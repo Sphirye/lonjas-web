@@ -5,12 +5,10 @@
       <v-row dense>
 
         <v-col cols="4">
-          <ArtistCardComponent :artist="post.item.artist"/>
-
-          <v-divider class="my-2" dark/>
+          <ArtistCardComponent :artist="post.item.artist" :post="post.item"/>
 
           <template v-if="post.item.type === Type.TWEET">
-            <v-card color="dark-3" flat dark>
+            <v-card v-if="false" color="dark-3" flat dark>
 
               <v-card-text>
                 <v-row no-gutters justify="space-around" class="blue--text">
@@ -18,9 +16,7 @@
                     <v-subheader>Categorias:</v-subheader>
                     <div class="d-flex flex-column">
                       <template v-for="(category) in post.item.categories">
-                        <a class="my-0 text-start" @click="$router.push('/categories/' + category.id)">
-                          {{ category.name }}
-                        </a>
+                        <a class="my-0 text-start" @click="$router.push('/categories/' + category.id)"> {{ category.name }} </a>
                       </template>
                     </div>
                   </v-col>
@@ -31,9 +27,7 @@
                     <v-subheader>Personajes:</v-subheader>
                     <div class="d-flex flex-column">
                       <template v-for="(character) in post.item.characters">
-                        <a class="my-0 text-start">
-                          {{ character.name }}
-                        </a>
+                        <a class="my-0 text-start"> {{ character.name }} </a>
                       </template>
                     </div>
                   </v-col>
@@ -44,9 +38,7 @@
                     <v-subheader>Tags:</v-subheader>
                     <div class="d-flex flex-column">
                       <template v-for="(tag) in post.item.tags">
-                        <a class="my-0 text-start">
-                          {{ tag.name }}
-                        </a>
+                        <a class="my-0 text-start"> {{ tag.name }} </a>
                       </template>
                     </div>
                   </v-col>
@@ -56,10 +48,7 @@
 
               <v-card-actions>
                 <v-spacer/>
-                <v-btn
-                    color="grey lighten-1" depressed light large target="_blank" height="30px" tile
-                    :href="`https://twitter.com/${artist.twitter.username}/status/${post.item.tweet.id}`"
-                >
+                <v-btn color="grey lighten-1" depressed light large target="_blank" height="30px" tile :href="`https://twitter.com/${artist.twitter.username}/status/${post.item.tweet.id}`">
                   Fuente
                 </v-btn>
               </v-card-actions>
@@ -92,57 +81,60 @@ import PostService from "@/service/PostService"
 import Handler from "@/handlers/Handler"
 import Artist, {Source} from "@/model/Artist"
 import Post, {Type} from "@/model/Post";
+import {getModule} from "vuex-module-decorators";
+import LangModule from "@/store/LangModule";
 
 @Component({
-      computed: {
-        Type() {
-          return Type
-        }
-      },
-      components: {PostImageComponent, ArtistCardComponent, PostCardComponent}
+        computed: {
+            Type() {
+                return Type
+            }
+        },
+        components: {PostImageComponent, ArtistCardComponent, PostCardComponent}
     }
 )
 export default class PostView extends Vue {
 
-  post: SingleItem<Post> = {item: new Post()}
-  loading: boolean = false
+    get lang() { return getModule(LangModule).lang }
+    post: SingleItem<Post> = {item: new Post()}
+    loading: boolean = false
 
-  created() {
-    this.refresh()
-  }
-
-  get artist() {
-    return this.post.item.artist
-  }
-
-  async refresh() {
-    try {
-      await Handler.getItem(this, this.post, () => PostService.getPublicPost(Number(this.$route.params.id)))
-    } catch (e) {
-      console.log(e)
-    }
-  }
-
-  get getArtistAvatar(): string | undefined {
-    let url: string | undefined = undefined
-
-    switch (this.artist!!.source) {
-      case (Source.TWITTER): {
-        url = this.artist!!.twitter!.profileImageUrl!;
-        break;
-      }
-      case Source.DEVIANTART: { /* todo */
-        break;
-      }
+    created() {
+        this.refresh()
     }
 
-    return url
-  }
+    get artist() {
+        return this.post.item.artist
+    }
 
-  toArtistPage(artist: Artist) {
-    this.$router.push("/artists/" + artist.id).catch(() => {
-    })
-  }
+    async refresh() {
+        try {
+            await Handler.getItem(this, this.post, () => PostService.getPublicPost(Number(this.$route.params.id)))
+        } catch (e) {
+            console.log(e)
+        }
+    }
+
+    get getArtistAvatar(): string | undefined {
+        let url: string | undefined = undefined
+
+        switch (this.artist!!.source) {
+            case (Source.TWITTER): {
+                url = this.artist!!.twitter!.profileImageUrl!;
+                break;
+            }
+            case Source.DEVIANTART: { /* todo */
+                break;
+            }
+        }
+
+        return url
+    }
+
+    toArtistPage(artist: Artist) {
+        this.$router.push("/artists/" + artist.id).catch(() => {
+        })
+    }
 
 }
 </script>
@@ -150,15 +142,15 @@ export default class PostView extends Vue {
 <style>
 
 a:hover {
-  color: #72a7ff;
-  background-color: transparent;
-  text-decoration: underline;
+    color: #72a7ff;
+    background-color: transparent;
+    text-decoration: underline;
 }
 
 a:active {
-  color: #106c85;
-  background-color: transparent;
-  text-decoration: underline;
+    color: #106c85;
+    background-color: transparent;
+    text-decoration: underline;
 }
 
 </style>

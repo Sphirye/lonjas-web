@@ -4,6 +4,7 @@ export default class Language {
     name!: string
     value!: LanguageType
     file!: any
+    flag!: string
 
 }
 

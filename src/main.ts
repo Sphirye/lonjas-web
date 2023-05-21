@@ -9,11 +9,13 @@ import { getModule } from "vuex-module-decorators"
 import VueDebounce from "vue-debounce"
 import "@/config/custom-styles.css"
 import 'roboto-fontface/css/roboto/roboto-fontface.css'
+import CountryFlag from 'vue-country-flag'
 import '@mdi/font/css/materialdesignicons.css'
 
 Vue.config.productionTip = false
 let vue: Vue
 AxiosConfig.init(vue!)
+Vue.use(CountryFlag)
 getModule(LangModule).loadLanguage()
 Vue.use(VueDebounce)
 

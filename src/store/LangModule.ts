@@ -2,13 +2,15 @@ import { Action, Module, Mutation, VuexModule } from "vuex-module-decorators"
 import Language, { LanguageType } from "@/model/vue/Language"
 import store from "@/store/index"
 import spanish from "@/lang/spanish"
+import english from "@/lang/english";
 
 @Module({ dynamic: true, store, name: "LangModule" } )
 export default class LangModule extends VuexModule {
 
     lang: any = spanish
     languages: Language[] = [
-        { name: "Español", file: spanish, value: LanguageType.SPANISH }
+        { name: "Spanish", flag: "es", file: spanish, value: LanguageType.SPANISH },
+        { name: "English", flag: "gb", file: english, value: LanguageType.ENGLISH }
     ]
     language: Language = this.languages[0]
 

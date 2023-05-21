@@ -1,6 +1,6 @@
 <template>
   <v-sheet dark outlined class="rounded" :height="height" :width="width">
-    <v-carousel ref="carousel" show-arrows v-model="index" height="100%">
+    <v-carousel ref="carousel" :show-arrows="images.length > 1" v-model="index" height="100%">
       <template v-for="(image, key) in images">
         <v-carousel-item :src="image" :key="key" contain/>
       </template>

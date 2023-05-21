@@ -23,7 +23,7 @@
                 <v-card-title class="font-weight-regular">{{ tag.name }}</v-card-title>
               </v-card>
             </template>
-            <span>{{ tag.description ? tag.description : "Descripción indefinida." }}</span>
+            <span>{{ tag.description || "Descripción indefinida." }}</span>
           </v-tooltip>
         </v-col>
       </template>

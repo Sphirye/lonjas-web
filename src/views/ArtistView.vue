@@ -99,12 +99,6 @@ export default class PostsView extends Vue {
     }
   }
 
-  validate() {
-    getModule(DialogModule).showDialog(new Dialog(this.lang.warning, "¿Desea continuar?", () => {
-      alert("Has continuado.")
-    }))
-  }
-
   @Watch("tab")
   watchTab() {
     RouterTool.watchTabs(this, "/artists/" + this.$route.params.id, this.tab, this.tabs)
