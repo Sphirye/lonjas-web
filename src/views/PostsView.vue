@@ -3,6 +3,18 @@
     <v-row dense align="center">
       <h2 class="uni-sans-heavy white--text mx-4">{{ lang.posts }}</h2>
       <v-spacer/>
+
+      <v-tooltip top max-width="300px">
+        <template v-slot:activator="{ on, attrs }">
+          <div v-bind="attrs" v-on="on">
+            <v-switch v-model="weirdMaterial" :label="lang.weirdMaterial" hide-details class="my-0 py-0" dark inset/>
+          </div>
+        </template>
+        <p class="text-center my-0">Permitir que los filtros con tags marcados como material raro se incluyan en las respuestas</p>
+      </v-tooltip>
+
+      <v-divider vertical class="mx-3" dark/>
+
       <v-sheet color="transparent">
         <v-text-field clearable hide-details dense outlined dark rounded append-icon="mdi-magnify" :label="lang.search" @keydown.enter="refresh" @click:clear="refresh"/>
       </v-sheet>
@@ -59,8 +71,10 @@ export default class PostsView extends Mixins(PaginationMixin) {
 
     drawer: boolean = false
 
-    lang = getModule(LangModule).lang
+    get lang() { return getModule(LangModule).lang }
+
     loading: boolean = false
+    weirdMaterial: boolean = false
     size: number = 40
     posts: MultipleItem<Post> = { items: [], totalItems: 0 }
 
@@ -73,7 +87,7 @@ export default class PostsView extends Mixins(PaginationMixin) {
     async refresh() {
         try {
             await Handler.getItems(this, this.posts, () => PostService.getPublicPosts(
-                this.page - 1, this.size, null, this.toIds(this.categories), this.toIds(this.characters), this.toIds(this.tags))
+                this.page - 1, this.size, null, this.toIds(this.categories), this.toIds(this.characters), this.toIds(this.tags), this.weirdMaterial)
             )
             this.setPageCount(this.posts.totalItems!!)
         } catch (e) { console.log(e) }
@@ -90,6 +104,15 @@ export default class PostsView extends Mixins(PaginationMixin) {
 
     toIds(array: (Category | Character | Tag)[]) {
         return array.map(v => v.id!!)
+    }
+
+    @Watch("categories")
+    onCategoriesChanged() {
+        this.$router.push({
+            query: {
+                categories: CustomTools.getIdsArray(this.categories).toString()
+            }
+        }).catch(() => {})
     }
 
     @Watch("page")

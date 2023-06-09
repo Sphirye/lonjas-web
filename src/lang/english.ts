@@ -10,7 +10,7 @@ export default {
     save: "Save",
     home: "Home",
     about: "About",
-    search: "Look for",
+    search: "Search",
     options: "Options",
     continue: "Continue",
     name: "Name",
@@ -43,4 +43,6 @@ export default {
     about9: "We reserve the right to remove from our page any material that we consider inappropriate, illegal, that infringes the copyright of third parties and that promotes or attacks any type of political ideology. Likewise, we have a rule of little tolerance for adulterated, edited or artificially generated material.",
     about10: "4. Liability:",
     about11: "We reserve the right to modify these terms and conditions at any time. Any modification will be effective immediately after its publication on our website. By continuing to use our service after the posting of changes, you agree to the updated terms and conditions.",
+
+    weirdMaterial: "Weird material"
 }

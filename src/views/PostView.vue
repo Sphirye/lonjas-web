@@ -131,11 +131,6 @@ export default class PostView extends Vue {
         return url
     }
 
-    toArtistPage(artist: Artist) {
-        this.$router.push("/artists/" + artist.id).catch(() => {
-        })
-    }
-
 }
 </script>
 

@@ -42,5 +42,7 @@ export default {
     about8: "3. Reglas de contenido:",
     about9: "Nos reservamos el derecho de retirar de nuestra pagina cualquier material que consideremos inapropiado, ilegal, que infrinja los derechos de autor de terceros y que promueva o ataque cualquier tipo de ideología politica. Así mismo, tenemos una regla de poca tolerancia al material adulterado, editado o generado artificialmente.",
     about10: "4. Responsabilidad:",
-    about11: "Nos reservamos el derecho de modificar estos términos y condiciones en cualquier momento. Cualquier modificación será efectiva inmediatamente después de su publicación en nuestra página web. Al continuar utilizando nuestro servicio después de la publicación de las modificaciones, usted acepta los términos y condiciones actualizados."
+    about11: "Nos reservamos el derecho de modificar estos términos y condiciones en cualquier momento. Cualquier modificación será efectiva inmediatamente después de su publicación en nuestra página web. Al continuar utilizando nuestro servicio después de la publicación de las modificaciones, usted acepta los términos y condiciones actualizados.",
+
+    weirdMaterial: "Material raro"
 }

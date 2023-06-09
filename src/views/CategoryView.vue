@@ -99,7 +99,7 @@ export default class CategoryView extends Mixins(PaginationMixin) {
 
   async getCategoryPosts() {
     await Handler.getItems(this, this.posts, () =>
-        PostService.getPublicPosts(0, 30, null, [this.category.item.id!!], null, null)
+        PostService.getPublicPosts(0, 30, null, [this.category.item.id!!], null, null, null)
     )
   }
 
