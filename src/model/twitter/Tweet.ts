@@ -1,5 +1,5 @@
-import {JsonObject, JsonProperty} from "json2typescript";
-import TwitterUser from "@/model/twitter/TwitterUser";
+import {JsonObject, JsonProperty} from "json2typescript"
+import TwitterUser from "@/model/twitter/TwitterUser"
 
 @JsonObject("Tweet")
 export default class Tweet {

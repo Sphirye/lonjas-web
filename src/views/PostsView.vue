@@ -4,14 +4,9 @@
       <h2 class="uni-sans-heavy white--text mx-4">{{ lang.posts }}</h2>
       <v-spacer/>
 
-      <v-tooltip top max-width="300px">
-        <template v-slot:activator="{ on, attrs }">
-          <div v-bind="attrs" v-on="on">
-            <v-switch v-model="weirdMaterial" :label="lang.weirdMaterial" hide-details class="my-0 py-0" dark inset/>
-          </div>
-        </template>
-        <p class="text-center my-0">Permitir que los filtros con tags marcados como material raro se incluyan en las respuestas</p>
-      </v-tooltip>
+      <v-btn icon dark @click="dialog = true">
+        <v-icon>mdi-cog</v-icon>
+      </v-btn>
 
       <v-divider vertical class="mx-3" dark/>
 
@@ -25,6 +20,8 @@
 
     <v-progress-linear class="my-4" color="grey" :indeterminate="loading"/>
 
+    {{postFilter.excludedTags}}
+
     <v-row align="start" dense justify="center" style="min-height: 500px">
       <template v-for="(post) in posts.items">
         <v-col cols="6" sm="4" md="3" lg="2" xl="1" class="flex">
@@ -37,6 +34,7 @@
 
     <v-row dense align="center">
       <v-spacer/>
+      <span class="white--text mx-4">Mostrando {{posts.items.length}} de {{posts.totalItems}} posts.</span>
       <v-pagination class="white--text" v-model="page" :length="pageCount" :total-visible="8"/>
     </v-row>
 
@@ -45,6 +43,10 @@
         :selectedTags.sync="tags" :selectedCategories.sync="categories" :selectedCharacters.sync="characters"
         @search="refresh"
     />
+
+    <v-dialog v-model="dialog" width="700px">
+      <PostFiltersDialog @update="refresh" @close="dialog = false"/>
+    </v-dialog>
 
   </v-container>
 </template>
@@ -65,32 +67,43 @@ import PaginationMixin from "@/mixins/PaginationMixin";
 import Category from "@/model/Category";
 import Character from "@/model/Character";
 import CustomTools from "@/service/tool/CustomTools";
+import PostFilter from "@/model/vue/PostFilter";
+import PostFilterMixin from "@/mixins/PostFilterMixin";
+import PostFiltersDialog from "@/components/dialogs/PostFiltersDialog.vue";
 
-@Component({components: {FilterPostDrawerComponent, PostCardComponent}})
-export default class PostsView extends Mixins(PaginationMixin) {
+@Component({
+    computed: {
+        CustomTools() {
+            return CustomTools
+        }
+    },
+    components: {PostFiltersDialog, FilterPostDrawerComponent, PostCardComponent}})
+export default class PostsView extends Mixins(PaginationMixin, PostFilterMixin) {
 
     drawer: boolean = false
+    dialog: boolean = false
 
     get lang() { return getModule(LangModule).lang }
 
     loading: boolean = false
     weirdMaterial: boolean = false
-    size: number = 40
+    size: number = 25
     posts: MultipleItem<Post> = { items: [], totalItems: 0 }
 
     tags: Tag[] = []
     categories: Category[] = []
     characters: Character[] = []
 
-    created() { this.refresh() }
+    created() {
+        this.refresh()
+    }
 
     async refresh() {
-        try {
-            await Handler.getItems(this, this.posts, () => PostService.getPublicPosts(
-                this.page - 1, this.size, null, this.toIds(this.categories), this.toIds(this.characters), this.toIds(this.tags), this.weirdMaterial)
-            )
-            this.setPageCount(this.posts.totalItems!!)
-        } catch (e) { console.log(e) }
+        await Handler.getItems(this, this.posts, () => PostService. getPublicPosts(
+            this.page - 1, this.size,
+            null, this.toIds(this.categories), this.toIds(this.characters), this.toIds(this.tags), this.postFilter
+        ))
+        this.setPageCount(this.posts.totalItems!!)
     }
 
     toggleDrawer() { this.drawer = !this.drawer }
@@ -102,17 +115,13 @@ export default class PostsView extends Mixins(PaginationMixin) {
         this.refresh()
     }
 
-    toIds(array: (Category | Character | Tag)[]) {
-        return array.map(v => v.id!!)
-    }
+    toIds(array: (Category | Character | Tag)[]) { return array.map(v => v.id!!) }
 
     @Watch("categories")
     onCategoriesChanged() {
-        this.$router.push({
-            query: {
-                categories: CustomTools.getIdsArray(this.categories).toString()
-            }
-        }).catch(() => {})
+        // this.$router.push({
+        //     query: { categories: CustomTools.getIdsArray(this.categories).toString() }
+        // }).catch(() => {})
     }
 
     @Watch("page")

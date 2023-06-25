@@ -3,6 +3,8 @@ import Response from "@/model/responses/Response"
 import JsonTool from "@/service/tool/JsonTool"
 import Post from "@/model/Post"
 import axios from "axios"
+import PostFilter from "@/model/vue/PostFilter";
+import CustomTools from "@/service/tool/CustomTools";
 
 export default class PostService {
 
@@ -16,13 +18,17 @@ export default class PostService {
 
     static async getPublicPosts(
         page: number, size: number, artistId: Nullable<number> = null, categoryIds: Nullable<number[]> = null,
-        characterIds: Nullable<number[]> = null, tagIds: Nullable<number[]> = null, weirdMaterial: Nullable<boolean> = null
+        characterIds: Nullable<number[]> = null, tagIds: Nullable<number[]> = null, filter: Nullable<PostFilter> = null
     ): Promise<Response<Post[]>> {
         try {
             const response = await axios.get(`${ConstantTool.BASE_URL}/public/post`, {
                 params: {
-                    page, size, search: null, artistId, weirdMaterial,
-                    categoryIds: categoryIds?.toString(), characterIds: characterIds?.toString(), tagIds: tagIds?.toString()
+                    page, size, search: null, artistId,
+                    categoryIds: categoryIds?.toString(), characterIds: characterIds?.toString(), tagIds: tagIds?.toString(),
+
+                    weirdMaterial: filter?.weirdMaterial, nsfw: filter?.nsfw,
+
+                    excludedTagIds: filter?.excludedTags != null ? CustomTools.getIdsArray(filter.excludedTags!).toString() : null
                 }
             })
             let posts = JsonTool.jsonConvert.deserializeArray(response.data, Post)

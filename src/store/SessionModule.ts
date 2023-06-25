@@ -1,7 +1,7 @@
 import {Action, Module, Mutation, VuexModule} from "vuex-module-decorators"
 import ConstantTool from "@/service/tool/ConstantTool"
 import CryptoTool from "@/service/tool/CryptoTool"
-import Session from "@/model/responses/Session"
+import Session from "@/model/vue/Session"
 import store from "@/store/index"
 
 @Module({dynamic: true, store, name: "SessionModule"})

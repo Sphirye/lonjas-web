@@ -14,7 +14,7 @@ export default class ArtistService {
         } catch (e) { return Promise.reject(e) }
     }
 
-    static async getPublicArtists(page: number, size: number, search: string | null): Promise<Response<Artist[]>> {
+    static async getPublicArtists(page: number, size: number, search: Nullable<string> = null): Promise<Response<Artist[]>> {
         try {
             const response = await axios.get(`${ConstantTool.BASE_URL}/public/artist`, {
                 params: { page, size, search }

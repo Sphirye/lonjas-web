@@ -20,6 +20,7 @@ export default new Vuetify({
         success: '#4CAF50',
         warning: '#FFC107',
 
+        'dark-0': '#41455b',
         'dark-1': '#2e3141',
         'dark-2': '#333443',
         'dark-3': '#2c2b3a',
