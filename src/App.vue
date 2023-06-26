@@ -10,6 +10,11 @@
     <SnackbarComponent/>
     <DialogComponent/>
     <FooterComponent/>
+
+    <template v-if="ConstantTool.DEVELOPMENT_DIALOG">
+      <DevelopmentDialog/>
+    </template>
+
   </v-app>
 </template>
 
@@ -20,8 +25,16 @@ import HeaderComponent from "@/components/ui/HeaderComponent.vue"
 import FooterComponent from "@/components/ui/FooterComponent.vue"
 import DialogComponent from "@/components/ui/DialogComponent.vue"
 import DrawerComponent from "@/components/ui/DrawerComponent.vue";
+import ConstantTool from "@/service/tool/ConstantTool";
+import DevelopmentDialog from "@/components/dialogs/DevelopmentDialog.vue";
 
-@Component({ components: { DialogComponent, SnackbarComponent, HeaderComponent, FooterComponent, DrawerComponent } })
+@Component({
+    computed: {
+        ConstantTool() {
+            return ConstantTool
+        }
+    },
+    components: {DevelopmentDialog, DialogComponent, SnackbarComponent, HeaderComponent, FooterComponent, DrawerComponent } })
 export default class App extends Vue {
 
 

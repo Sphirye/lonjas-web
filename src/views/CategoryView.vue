@@ -18,7 +18,7 @@
               <template v-for="(character) in characters.items">
                 <v-list-item>
                   <v-list-item-title class="text-15">
-                    {{character.name}}
+                    {{ character.name }}
                   </v-list-item-title>
                 </v-list-item>
               </template>
@@ -34,18 +34,8 @@
       </v-col>
 
       <v-col cols="9">
-        <v-sheet color="transparent" min-height="550px">
-          <v-row dense>
-            <template v-for="(post) in posts.items">
-              <v-col cols="auto">
-                <PostCardComponent width="150px" height="150px" :post="post"/>
-              </v-col>
-            </template>
-          </v-row>
-        </v-sheet>
-        <v-row dense justify="end" align="center">
-          <v-pagination v-model="postsPage" :length="postsPageCount" :total-visible="8"/>
-        </v-row>
+        <PostsGridPageableComponent :posts.sync="posts" :page.sync="postsPage" :page-count.sync="postsPageCount" post-width="100%" post-height="200px"/>
+        <v-progress-linear class="my-4" color="grey" :indeterminate="loading"/>
       </v-col>
     </v-row>
 
@@ -54,11 +44,14 @@
 
 
 <script lang="ts">
+
+import PostsGridPageableComponent from "@/components/PostsGridPageableComponent.vue"
 import {MultipleItem, SingleItem} from "@/handlers/interfaces/ContentUI"
 import PostCardComponent from "@/components/PostCardComponent.vue"
-import {Component, Mixins, Ref, Vue, Watch} from 'vue-property-decorator'
+import {Component, Mixins, Watch} from 'vue-property-decorator'
 import CharacterService from "@/service/CharacterService"
 import CategoryService from "@/service/CategoryService"
+import PaginationMixin from "@/mixins/PaginationMixin"
 import {getModule} from "vuex-module-decorators"
 import PostService from "@/service/PostService"
 import LangModule from "@/store/LangModule"
@@ -66,55 +59,59 @@ import Character from "@/model/Character"
 import Handler from "@/handlers/Handler"
 import Post, {Type} from "@/model/Post"
 import Category from "@/model/Category"
-import PaginationMixin from "@/mixins/PaginationMixin";
 
-@Component({ components: { PostCardComponent } })
+@Component({components: {PostsGridPageableComponent, PostCardComponent}})
 export default class CategoryView extends Mixins(PaginationMixin) {
 
-  get lang() { return getModule(LangModule).lang }
+    get lang() {
+        return getModule(LangModule).lang
+    }
 
-  category: SingleItem<Category> = { item: new Category() }
-  characters: MultipleItem<Character> = { items: [], totalItems: 0 }
-  posts: MultipleItem<Post> = { items: [], totalItems: 0 }
+    category: SingleItem<Category> = {item: new Category()}
+    characters: MultipleItem<Character> = {items: [], totalItems: 0}
+    posts: MultipleItem<Post> = {items: [], totalItems: 0}
 
-  charactersPage: number = 1
-  charactersSize: number = 10
-  charactersPageCount: number = 0
+    charactersPage: number = 1
+    charactersSize: number = 10
+    charactersPageCount: number = 0
 
-  postsPage: number = 1
-  postsSize: number = 10
-  postsPageCount: number = 0
+    postsPage: number = 1
+    postsSize: number = 30
+    postsPageCount: number = 0
 
-  loading: boolean = false
+    loading: boolean = false
 
-  created() { this.refresh() }
+    created() {
+        this.refresh()
+    }
 
-  async getCharacters() {
-    await Handler.getItems(this, this.characters, () =>
-        CharacterService.getPublicCategoryCharacters(this.charactersPage - 1, this.charactersSize, null, this.category.item.id!!)
-    )
+    async getCharacters() {
+        await Handler.getItems(this, this.characters, () =>
+            CharacterService.getPublicCategoryCharacters(this.charactersPage - 1, this.charactersSize, null, this.category.item.id!!)
+        )
 
-    this.charactersPageCount = Math.ceil(this.characters.totalItems! / this.charactersSize)
-  }
+        this.charactersPageCount = Math.ceil(this.characters.totalItems! / this.charactersSize)
+    }
 
-  async getCategoryPosts() {
-    await Handler.getItems(this, this.posts, () =>
-        PostService.getPublicPosts(0, 30, null, [this.category.item.id!!], null, null, null)
-    )
-  }
+    async getCategoryPosts() {
+        await Handler.getItems(this, this.posts, () =>
+            PostService.getPublicPosts(this.postsPage - 1, this.postsSize, null, [this.category.item.id!!], null, null, null)
+        )
+        this.setPageCount(this.posts.totalItems!)
+    }
 
-  async refresh() {
-    try {
-      await Handler.getItem(this, this.category, () => CategoryService.getPublicCategory(Number(this.$route.params.id)))
-      if (this.category.item.id) {
-        await this.getCharacters()
-        await this.getCategoryPosts()
-      }
-    } catch (e) { console.log(e) }
-  }
+    async refresh() {
+        await Handler.getItem(this, this.category, () => CategoryService.getPublicCategory(Number(this.$route.params.id)))
+        if (this.category.item.id) {
+            await this.getCharacters()
+            await this.getCategoryPosts()
+        }
+    }
 
-  @Watch('charactersPage')
-  onPageChanged() { this.refresh() }
+    @Watch('charactersPage')
+    onPageChanged() {
+        this.refresh()
+    }
 
 
 }

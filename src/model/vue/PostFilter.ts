@@ -1,5 +1,5 @@
 import {Gender} from "@/model/Character"
-import Tag from "@/model/Tag";
+import Tag from "@/model/Tag"
 
 export default class PostFilter {
     static readonly KEY = "post-filter"

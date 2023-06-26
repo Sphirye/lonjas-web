@@ -45,8 +45,6 @@
             <v-checkbox :value="Gender.FEMALE" v-model="modelPostFilter.gender" label="Mujer" hide-details/>
             <v-checkbox :value="Gender.OTHER" v-model="modelPostFilter.gender" label="Otro" hide-details/>
           </v-col>
-
-          <v-img src="@/assets/myla-mining.webp" max-width="150px"/>
         </v-row>
       </v-container>
     </v-card-text>
@@ -60,16 +58,16 @@
 </template>
 
 <script lang="ts">
+
+import TagAutocompleteComponent from "@/components/autocomplete/TagAutocompleteComponent.vue"
 import { Component, Mixins } from 'vue-property-decorator'
 import PostFilterMixin from "@/mixins/PostFilterMixin"
 import {getModule} from "vuex-module-decorators"
+import PostFilter from "@/model/vue/PostFilter"
+import DialogModule from "@/store/DialogModule"
 import LangModule from "@/store/LangModule"
-import TagAutocompleteComponent from "@/components/autocomplete/TagAutocompleteComponent.vue"
-import DialogModule from "@/store/DialogModule";
-import Dialog from "@/model/vue/Dialog";
-import {Gender} from "@/model/Character";
-import PostFilter from "@/model/vue/PostFilter";
-import PostFilterModule from "@/store/PostFilterModule";
+import {Gender} from "@/model/Character"
+import Dialog from "@/model/vue/Dialog"
 
 @Component({
     computed: {
